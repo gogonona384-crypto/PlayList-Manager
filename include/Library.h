@@ -24,6 +24,10 @@ public :
             items [i] = nullptr;
         }
     }
+    MediaItem* getItem(int index)
+    {
+        return items[index];
+    }
     void addItem (MediaItem* item)
     {
         if (itemCount >=100)
@@ -70,6 +74,58 @@ public :
             cout<< "Invalid index!" <<endl;
         }
     }
+    void searchItem(string query)
+    {
+        bool found = false;
+        int comparisons = 0;
+        for (int i = 0; i < itemCount; i++)
+        {
+            comparisons++;
+            if (items[i]->getTitle() == query )
+            {
+                cout << "Found item: ";
+                items[i]->getInfo();
+                cout << endl;
+                found = true;
+            }
+        }
+        if (!found) cout << "Item not found!" << endl;
+        cout << "Comparisons count: " << comparisons << endl;
+    }
+
+    void sortLibrary()
+    {
+        int comparisons = 0;
+        for (int i = 0; i < itemCount - 1; i++)
+        {
+            int minIdx = i;
+            for (int j = i + 1; j < itemCount; j++)
+            {
+                comparisons++;
+                if (items[j]->getTitle() < items[minIdx]->getTitle())
+                {
+                    minIdx = j;
+                }
+            }
+            if (minIdx != i)
+            {
+                swap(items[i], items[minIdx]);
+            }
+        }
+        cout << "Library sorted successfully!" << endl;
+        cout << "Comparisons count: " << comparisons << endl;
+    }
+
+    void showStats()
+    {
+        cout << "Total Items: " << itemCount << endl;
+        int totalDuration = 0;
+        for (int i = 0; i < itemCount; i++)
+        {
+            totalDuration += items[i]->getDuration();
+        }
+        cout << "Total Duration: " << totalDuration << " seconds" << endl;
+    }
         ~Library()
         {
             for (int i = 0 ; i < itemCount ; i++ )
@@ -79,5 +135,4 @@ public :
             }
         }
 };
-
 #endif

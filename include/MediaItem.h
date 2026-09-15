@@ -8,7 +8,7 @@ using namespace std;
 class MediaItem {
 protected:
     string title;
-    int duration; // بالثواني أو دقائق
+    int duration; 
     int playCount;
 
 public:
