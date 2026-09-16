@@ -9,19 +9,18 @@ private:
     int episodeNumber;
 
 public:
-    Podcast(string t, string h, int d, int ep)
+    Podcast(string t = "", string h = "", int d = 0, int ep = 0)
         : MediaItem(t, d), host(h), episodeNumber(ep) {}
 
     void play() override {
         incrementPlayCount();
-        cout << ">>> NOW PLAYING: " << title << " (" << duration << ")\n"
-             << "[PODCAST] episode " << episodeNumber << ", hosted by " << host << "\n";
+        cout << "[PODCAST] episode " << episodeNumber << ", hosted by " << host << endl;
     }
 
     void getInfo() const override {
         cout << "[PODCAST] " << title << " | Host: " << host
              << " | Ep: " << episodeNumber << " | Duration: " << duration
-             << " | Plays: " << playCount << endl;
+             << "s | Plays: " << playCount;
     }
 
     string getHost() const { return host; }

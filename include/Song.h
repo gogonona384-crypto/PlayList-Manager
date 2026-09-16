@@ -10,20 +10,19 @@ private:
     string genre;
 
 public:
-    Song(string t, string a, int d, string g)
+    Song(string t = "", string a = "", int d = 0, string g = "")
         : MediaItem(t, d), artist(a), genre(g) {}
 
     void play() override
     {
         incrementPlayCount();
-        cout << ">>> NOW PLAYING: " << title << "\n"
-             << artist << " (" << duration << ")\n"
-             << "[SONG] streaming audio...\n";
+        cout << "[SONG] streaming audio..." << endl;
     }
+
     void getInfo() const override
     {
         cout << "[SONG] " << title << " | Artist: " << artist
-             << " | Duration: " << duration << " | Genre: " << genre
+             << " | Duration: " << duration << "s | Genre: " << genre
              << " | Plays: " << playCount << endl;
     }
 
@@ -31,9 +30,11 @@ public:
     {
         return artist;
     }
+
     string getGenre() const
     {
         return genre;
     }
 };
+
 #endif

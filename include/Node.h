@@ -3,16 +3,15 @@
 
 #include "MediaItem.h"
 
-struct Node {
+struct Node 
+{
     MediaItem* item;
     Node* next;
     Node* prev;
 
-    Node(MediaItem* mediaItem) {
-        item = mediaItem;
-        next = nullptr;
-        prev = nullptr;
-    }
+    Node(MediaItem* mediaItem) 
+    : item(mediaItem), next(nullptr), prev(nullptr) {}
+
 };
 
 #endif

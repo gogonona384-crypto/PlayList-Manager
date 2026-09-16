@@ -19,21 +19,20 @@ int main()
 
     while (choice != 0)
     {
-        cout << "\n=== Playlist Manager ===" << endl;
-        cout << "1. Add Item to Library" << endl;
-        cout << "2. View Library" << endl;
-        cout << "3. Delete Item from Library" << endl;
-        cout << "4. Enqueue Item to PlayQueue" << endl;
-        cout << "5. Play Next from Queue" << endl;
-        cout << "6. View Queue" << endl;
-        cout << "7. Search Item by Title" << endl;
-        cout << "8. Search Item by Artist/Host" << endl;
-        cout << "9. Sort Library by Title" << endl;
-        cout << "10. Show Library Stats" << endl;
-        cout << "0. Exit" << endl;
-        cout << "========================" << endl;
-        cout << "Enter choice: ";
-
+        cout << "\n=== Playlist Manager ===\n";
+        cout << "1. Add Item to Library\n";
+        cout << "2. View Library\n";
+        cout << "3. Delete Item from Library\n";
+        cout << "4. Enqueue Item to PlayQueue\n";
+        cout << "5. Play Next from Queue\n";
+        cout << "6. View PlayQueue\n";
+        cout << "7. Search by Title (Binary Search)\n";
+        cout << "8. Filter by Artist/Genre (Linear Search)\n";
+        cout << "9. Sort Library (Selection Sort)\n";
+        cout << "10. Playlist Controls (Next / Prev / Print Backwards)\n";
+        cout << "11. Show Library Stats\n";
+        cout << "0. Exit\n";
+        cout << "Choose option: ";
         cin >> choice;
 
         if (cin.fail())
@@ -46,7 +45,7 @@ int main()
 
         switch (choice)
         {
-        case 1:
+        case 1: 
         {
             int type;
             cout << "1. Song\n2. Podcast\nChoose type: ";
@@ -80,8 +79,10 @@ int main()
                 cin.ignore(10000, '\n');
                 getline(cin, genre);
 
-                mylib.addItem(new Song(title, artistOrHost, duration, genre));
-                cout << "Song added successfully!" << endl;
+                Song* newSong = new Song(title, artistOrHost, duration, genre);
+                mylib.addItem(newSong);
+                myPlayList.addTrack(newSong);
+                cout << "[OK] Song added successfully!" << endl;
             }
             else if (type == 2)
             {
@@ -89,8 +90,10 @@ int main()
                 cout << "Enter Episode Number: ";
                 cin >> episodeNum;
 
-                mylib.addItem(new Podcast(title, artistOrHost, duration, episodeNum));
-                cout << "Podcast added successfully!" << endl;
+                Podcast* newPodcast = new Podcast(title, artistOrHost, duration, episodeNum);
+                mylib.addItem(newPodcast);  
+                myPlayList.addTrack(newPodcast);
+                cout << "[OK] Podcast added successfully!" << endl;
             }
             else
             {
@@ -98,13 +101,14 @@ int main()
             }
             break;
         }
-        case 2:
+
+        case 2: 
         {
             mylib.viewALL();
             break;
         }
 
-        case 3:
+        case 3: 
         {
             int index;
             cout << "Enter Item ID to delete: ";
@@ -112,7 +116,8 @@ int main()
             mylib.deleteItem(index - 1);
             break;
         }
-        case 4:
+
+        case 4: 
         {
             int index;
             cout << "Enter Item ID to enqueue: ";
@@ -122,7 +127,6 @@ int main()
             if (item != nullptr)
             {
                 myqueue.enqueue(item);
-                cout << "Item enqueued successfully!" << endl;
             }
             else
             {
@@ -130,53 +134,89 @@ int main()
             }
             break;
         }
-        case 5:
+
+        case 5: 
+        {
             myqueue.playNext();
             break;
+        }
 
-        case 6:
+        case 6: 
+        {
             myqueue.displayQueue();
             break;
-            
-        case 7 :
-        {
-        string searchTitle;
-
-         cout<<"Enter exact title to search :" ;
-         cin.ignore();
-        getline(cin,searchTitle);
-
-          mylib.searchItem(searchTitle);
-        break;
-         }
-
-         case 8 :
-        {
-        string artistName;
-        cout<<"Enter exact artist name to search :" ;
-        cin.ignore();
-        getline(cin,artistName);
-
-         mylib.searchItem(artistName);
-        break;
         }
-        case 9 :
+            
+        case 7: 
         {
-        mylib.sortLibrary();
+            string searchTitle;
+            cout << "Enter exact title to search (Array must be sorted first): ";
+            cin.ignore(10000, '\n');
+            getline(cin, searchTitle);
+            mylib.binarySearchTitle(searchTitle);
             break;
         }
-        case 10 :
+
+        case 8: 
         {
-        mylib.showStats();
-        break;
+            string query;
+            cout << "Enter artist or genre to search: ";
+            cin.ignore(10000, '\n');
+            getline(cin, query);
+            mylib.filterLinear(query);
+            break;
         }
-        case 0:        
+
+        case 9: 
+        {
+            int sortOption;
+            cout << "Sort by:\n1. Title (A-Z)\n2. Duration\n3. Play Count\nChoose option: ";
+            cin >> sortOption;
+
+            if (sortOption >= 1 && sortOption <= 3) 
+            {
+                mylib.sortLibrary(sortOption);
+            }
+            else 
+            {
+                cout << "Invalid sort option!" << endl;
+            }
+            break;
+        }
+
+        case 10: 
+        {
+            int plChoice;
+            cout << "\n--- Playlist Controls ---\n";
+            cout << "1. Next Track\n2. Previous Track\n3. Print Forwards\n4. Print Backwards (Recursive)\n5. Total Duration (Recursive)\nChoose: ";
+            cin >> plChoice;
+
+            if (plChoice == 1) myPlayList.nextTrack();
+            else if (plChoice == 2) myPlayList.prevTrack();
+            else if (plChoice == 3) myPlayList.printForwards();
+            else if (plChoice == 4) myPlayList.printBackwards();
+            else if (plChoice == 5) cout << "Total Duration: " << myPlayList.getTotalDuration() << " seconds." << endl;
+            else cout << "Invalid choice!" << endl;
+            break;
+        }
+
+        case 11: 
+        {
+            mylib.showStats();
+            break;
+        }
+
+        case 0:      
+        {
             cout << "Exiting Program ..." << endl;
             break;
+        }
 
         default:
+        {
             cout << "Invalid choice! Try again." << endl;
             break;
+        }
         }
     }
     return 0;

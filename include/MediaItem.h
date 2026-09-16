@@ -13,9 +13,8 @@ protected:
 
 public:
     MediaItem(string t = "", int d = 0) : title(t), duration(d), playCount(0) {}
-    virtual ~MediaItem() {}
+    virtual ~MediaItem() = default;
 
-    // Pure Virtual Function
     virtual void play() = 0;
     virtual void getInfo() const = 0;
 
@@ -23,6 +22,11 @@ public:
     int getDuration() const { return duration; }
     int getPlayCount() const { return playCount; }
     void incrementPlayCount() { playCount++; }
+
+    friend ostream& operator<<(ostream& os, const MediaItem& item) {
+        os << "Title: " << item.title << ", Duration: " << item.duration << " seconds, Play Count: " << item.playCount;
+        return os;
+    }
 };
 
 #endif
