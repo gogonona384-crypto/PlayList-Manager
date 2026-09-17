@@ -24,10 +24,10 @@ int main()
         cout << "2. View Library\n";
         cout << "3. Delete Item from Library\n";
         cout << "4. Enqueue Item to PlayQueue\n";
-        cout << "5. Play Next from Queue\n";
-        cout << "6. View PlayQueue\n";
-        cout << "7. Search by Title (Binary Search)\n";
-        cout << "8. Filter by Artist/Genre (Linear Search)\n";
+        cout << "5. Play Next Item in Queue\n";
+        cout << "6. Display PlayQueue\n";
+        cout << "7. Binary Search by Title\n";
+        cout << "8. Linear Filter by Artist/Genre\n";
         cout << "9. Sort Library (Selection Sort)\n";
         cout << "10. Playlist Controls (Next / Prev / Print Backwards)\n";
         cout << "11. Show Library Stats\n";
@@ -146,7 +146,7 @@ int main()
             myqueue.displayQueue();
             break;
         }
-            
+
         case 7: 
         {
             string searchTitle;
