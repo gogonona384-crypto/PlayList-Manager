@@ -195,7 +195,7 @@ int main()
             else if (plChoice == 2) myPlayList.prevTrack();
             else if (plChoice == 3) myPlayList.printForwards();
             else if (plChoice == 4) myPlayList.printBackwards();
-            else if (plChoice == 5) cout << "Total Duration: " << myPlayList.getTotalDuration() << " seconds." << endl;
+            else if (plChoice == 5) myPlayList.showTotalDuration();
             else cout << "Invalid choice!" << endl;
             break;
         }
