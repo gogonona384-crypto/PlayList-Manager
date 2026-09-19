@@ -26,3 +26,5 @@ A C++ Object-Oriented application for managing dynamic playlists, searching item
 ![UML Diagram](docs/uml-class-diagram.png)
 ## Program Screenshots
 ![App Execution](docs/screenshot.png)
+
+![App Execution](screenshot.png)
