@@ -1,12 +1,13 @@
-#include <iostream>
 #include <string>
-#include "../include/MediaItem.h"
-#include "../include/Song.h"
-#include "../include/Podcast.h"
-#include "../include/Playlist.h"
-#include "../include/PlayQueue.h"
-#include "../include/Library.h"
-#include "../include/Node.h"
+#include <iostream>
+#include <limits>
+#include "MediaItem.h"
+#include "Song.h"
+#include "Podcast.h"
+#include "Playlist.h"
+#include "PlayQueue.h"
+#include "Library.h"
+#include "Node.h"
 
 using namespace std;
 
@@ -31,6 +32,7 @@ int main()
         cout << "9. Sort Library (Selection Sort)\n";
         cout << "10. Playlist Controls (Next / Prev / Print Backwards)\n";
         cout << "11. Show Library Stats\n";
+        cout << "12. View Play History\n";
         cout << "0. Exit\n";
         cout << "Choose option: ";
         cin >> choice;
@@ -38,7 +40,7 @@ int main()
         if (cin.fail())
         {
             cin.clear();
-            cin.ignore(10000, '\n');
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid input! Please enter a number." << endl;
             continue;
         }
@@ -54,12 +56,12 @@ int main()
             if (cin.fail())
             {
                 cin.clear();
-                cin.ignore(10000, '\n');
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Invalid type input!" << endl;
                 break;
             }
 
-            cin.ignore(10000, '\n'); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
             string title, artistOrHost;
             int duration;
 
@@ -72,11 +74,19 @@ int main()
             cout << "Enter Duration (seconds): ";
             cin >> duration;
 
+            if (cin.fail() || duration < 0)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid duration!" << endl;
+                break;
+            }
+
             if (type == 1)
             {
                 string genre;
                 cout << "Enter Genre: ";
-                cin.ignore(10000, '\n');
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, genre);
 
                 Song* newSong = new Song(title, artistOrHost, duration, genre);
@@ -89,6 +99,14 @@ int main()
                 int episodeNum;
                 cout << "Enter Episode Number: ";
                 cin >> episodeNum;
+
+                if (cin.fail() || episodeNum < 0)
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Invalid episode number!" << endl;
+                    break;
+                }
 
                 Podcast* newPodcast = new Podcast(title, artistOrHost, duration, episodeNum);
                 mylib.addItem(newPodcast);  
@@ -137,7 +155,10 @@ int main()
 
         case 5: 
         {
-            myqueue.playNext();
+            MediaItem* playedItem = myqueue.playNext();
+            if (playedItem != nullptr) {
+                mylib.addToHistory(playedItem);
+            }
             break;
         }
 
@@ -151,7 +172,7 @@ int main()
         {
             string searchTitle;
             cout << "Enter exact title to search (Array must be sorted first): ";
-            cin.ignore(10000, '\n');
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             getline(cin, searchTitle);
             mylib.binarySearchTitle(searchTitle);
             break;
@@ -161,7 +182,7 @@ int main()
         {
             string query;
             cout << "Enter artist or genre to search: ";
-            cin.ignore(10000, '\n');
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             getline(cin, query);
             mylib.filterLinear(query);
             break;
@@ -188,15 +209,22 @@ int main()
         {
             int plChoice;
             cout << "\n--- Playlist Controls ---\n";
-            cout << "1. Next Track\n2. Previous Track\n3. Print Forwards\n4. Print Backwards (Recursive)\n5. Total Duration (Recursive)\nChoose: ";
+            cout << "1. Play Current Track\n2. Next Track\n3. Previous Track\n4. Print Forwards\n5. Print Backwards (Recursive)\n6. Total Duration (Recursive)\nChoose: ";
             cin >> plChoice;
 
-            if (plChoice == 1) myPlayList.nextTrack();
-            else if (plChoice == 2) myPlayList.prevTrack();
-            else if (plChoice == 3) myPlayList.printForwards();
-            else if (plChoice == 4) myPlayList.printBackwards();
-            else if (plChoice == 5) myPlayList.showTotalDuration();
+            MediaItem* playedItem = nullptr;
+
+            if (plChoice == 1) playedItem = myPlayList.playCurrent();
+            else if (plChoice == 2) playedItem = myPlayList.nextTrack();
+            else if (plChoice == 3) playedItem = myPlayList.prevTrack();
+            else if (plChoice == 4) myPlayList.printForwards();
+            else if (plChoice == 5) myPlayList.printBackwards();
+            else if (plChoice == 6) myPlayList.showTotalDuration();
             else cout << "Invalid choice!" << endl;
+
+            if (playedItem != nullptr) {
+                mylib.addToHistory(playedItem);
+            }
             break;
         }
 
@@ -205,8 +233,14 @@ int main()
             mylib.showStats();
             break;
         }
+        
+        case 12: 
+        {
+            mylib.viewHistory();
+            break;
+        }
 
-        case 0:      
+        case 0:       
         {
             cout << "Exiting Program ..." << endl;
             break;

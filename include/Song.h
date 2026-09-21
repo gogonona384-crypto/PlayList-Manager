@@ -15,14 +15,13 @@ public:
 
     void play() override
     {
-        incrementPlayCount();
-        cout << "[SONG] streaming audio..." << endl;
+        cout << "[SONG] " << title << " by " << artist << " - streaming audio..." << endl;
     }
 
     void getInfo() const override
     {
         cout << "[SONG] " << title << " | Artist: " << artist
-             << " | Duration: " << duration << "s | Genre: " << genre
+             << " | Duration: " << getFormattedDuration() << " | Genre: " << genre
              << " | Plays: " << playCount << endl;
     }
 

@@ -30,6 +30,7 @@ public:
         else
         {
             rear->next = newNode;
+            newNode->prev = rear; 
             rear = newNode;
         }
         cout << "[OK] " << item->getTitle() << " added to the queue." << endl;
@@ -57,7 +58,8 @@ public:
         }
         else
         {
-            // حساب عدد العناصر المتبقية
+            front->prev = nullptr;
+            
             int count = 0;
             Node* curr = front;
             while (curr != nullptr) {

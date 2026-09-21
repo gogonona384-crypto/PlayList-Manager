@@ -13,14 +13,14 @@ public:
         : MediaItem(t, d), host(h), episodeNumber(ep) {}
 
     void play() override {
-        incrementPlayCount();
-        cout << "[PODCAST] episode " << episodeNumber << ", hosted by " << host << endl;
+        // Ziada: al-increment momken yet'amel hena aw fel-Queue/Playlist
+        cout << "[PODCAST] " << title << " (Ep. " << episodeNumber << "), hosted by " << host << endl;
     }
 
     void getInfo() const override {
         cout << "[PODCAST] " << title << " | Host: " << host
-             << " | Ep: " << episodeNumber << " | Duration: " << duration
-             << "s | Plays: " << playCount;
+             << " | Ep: " << episodeNumber << " | Duration: " << getFormattedDuration()
+             << " | Plays: " << playCount << endl;
     }
 
     string getHost() const { return host; }

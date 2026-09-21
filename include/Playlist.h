@@ -13,14 +13,12 @@ private:
     Node* tail;
     Node* currentTrack;
 
-    // Recursive function to total duration
     int calculateDurationRecursive(Node* node) 
     {
         if (node == nullptr) return 0;
         return node->item->getDuration() + calculateDurationRecursive(node->next);
     }
 
-    // Recursive function to print backwards
     void printBackwardsRecursive(Node* node, int index) 
     {
         if (node == nullptr) return;
@@ -79,38 +77,48 @@ public:
         if (temp->next) temp->next->prev = temp->prev;
 
         delete temp;
+
+        if (head == nullptr) {
+            tail = nullptr;
+            currentTrack = nullptr;
+        }
+
         cout << "[OK] Track removed successfully." << endl;
     }
 
-    void playCurrent() {
+    MediaItem* playCurrent() {
         if (currentTrack) {
             cout << "> NOW PLAYING: ";
             currentTrack->item->play();
             currentTrack->item->incrementPlayCount();
+            return currentTrack->item; 
         } else {
             cout << "Playlist is empty!" << endl;
+            return nullptr;
         }
     }
 
-    void nextTrack() {
+    MediaItem* nextTrack() {
         if (currentTrack && currentTrack->next) {
             currentTrack = currentTrack->next;
-            playCurrent();
+            return playCurrent();
         } else {
             cout << "[!] You are on the last track." << endl;
+            return nullptr;
         }
     }
 
-    void prevTrack() {
+    MediaItem* prevTrack() {
         if (currentTrack && currentTrack->prev) {
             currentTrack = currentTrack->prev;
-            playCurrent();
+            return playCurrent();
         } else {
             cout << "[!] You are on the first track." << endl;
+            return nullptr;
         }
     }
 
-    void printForwards() {
+    void printForwards() const {
         if (head == nullptr) {
             cout << "Playlist is empty!" << endl;
             return;
@@ -123,7 +131,7 @@ public:
         }
     }
 
-    void printBackwards() {
+    void printBackwards() const {
         if (tail == nullptr) {
             cout << "Playlist is empty!" << endl;
             return;
@@ -139,13 +147,13 @@ public:
         printBackwardsRecursive(tail, totalTracks); 
     }
 
-    void showTotalDuration() {
+    void showTotalDuration() const {
         if (head == nullptr) {
             cout << "Playlist is empty!" << endl;
             return;
         }
 
-        int totalSeconds = calculateDurationRecursive(head);
+        int totalSeconds = const_cast<Playlist*>(this)->calculateDurationRecursive(head);
         int mins = totalSeconds / 60;
         int secs = totalSeconds % 60;
 
