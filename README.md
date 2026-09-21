@@ -22,3 +22,9 @@ A C++ Object-Oriented application for managing dynamic playlists, searching item
    `cl.exe /EHsc src/main.cpp /Fe:src/main.exe`
 2. Run executable:
    `.\src\main.exe`
+## UML Class Diagram
+![UML Diagram](docs/uml-class-diagram.png)
+## Program Screenshots
+![App Execution](docs/screenshot.png)
+
+![App Execution](screenshot.png)
