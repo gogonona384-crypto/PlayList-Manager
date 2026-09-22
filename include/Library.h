@@ -2,6 +2,7 @@
 #define PLAYQUEUE_H 
 
 #include <iostream>
+#include"Library.h"
 #include "Node.h"
 
 using namespace std;

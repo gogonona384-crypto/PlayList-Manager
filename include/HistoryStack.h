@@ -18,7 +18,10 @@ public:
         }
     }
 
-    void push(MediaItem* item) {
+    void push(MediaItem* item) 
+    {
+      if (item == nullptr)
+            return;
         if (topIndex < capacity - 1) {
             topIndex++;
             items[topIndex] = item;
