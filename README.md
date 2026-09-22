@@ -1,30 +1,26 @@
-# Playlist Manager Application
+# Playlist Manager Application - C++ Track
 
-A C++ Object-Oriented application for managing dynamic playlists, searching items, sorting, and maintaining a playback queue.
+A C++ console-based music application that manages a library of songs and podcasts, custom dynamic playlists, playback queues, and playback history using advanced data structures and algorithms.
 
-## Features
-- **Library Management**: Add, delete, and view media items (Songs & Podcasts).
-- **Playback Queue**: Enqueue and play dynamic tracks using custom Queue logic.
-- **Search & Sort**: Linear search by title/artist and selection sort by title.
-- **Statistics**: Display library overview and total durations.
+---
 
-## Big O Complexity Analysis
+## 👥 Team Members & Contributions
 
-| Operation | Function / Method | Time Complexity | Complexity Reasoning |
-| :--- | :--- | :--- | :--- |
-| **Search** | `searchItem()` | O(N)| Performs linear search scanning elements up to $N$. |
-| **Sort** | `sortLibrary()` | O(N^2) | Selection Sort algorithm utilizing nested loops. |
-| **Enqueue** | `enqueue()` | O(1) | Direct insertion at the rear of the Queue. |
-| **Stats** | `showStats()` | O(N)| Single traversal over vector items to aggregate statistics. |
+| Member Name | Role & Contributions |
+| :--- | :--- |
+| **Nourhan Ahmed Kamal** | Architecture, Doubly Linked List, Queue, History Stack (Bonus), UML Diagram, & README |
+| **Team Member 2** | MediaItem Inheritance, Song & Podcast classes, Output Matching |
+| **Team Member 3** | Search & Sorting Algorithms (Binary Search, Selection Sort), Recursion |
 
-## How to Run
-1. Compile the program:
-   `cl.exe /EHsc src/main.cpp /Fe:src/main.exe`
-2. Run executable:
-   `.\src\main.exe`
-## UML Class Diagram
-![UML Diagram](docs/uml-class-diagram.png)
-## Program Screenshots
-![App Execution](docs/screenshot.png)
+---
 
-![App Execution](screenshot.png)
+## 🛠️ How to Compile and Run
+
+Make sure you have a C++ compiler installed (`g++`). Run the following commands in your terminal:
+
+```bash
+# Compile all source files
+g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
+
+# Run executable
+./playlist_manager
