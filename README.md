@@ -35,21 +35,27 @@ A C++ console-based music application that manages a library of songs and podcas
 
 Make sure you have a C++ compiler installed (`g++`). Run the following commands in your terminal:
 
-```bash
-# Clone the repository
-git clone [https://github.com/gogonona384-crypto/PlayList-Manager.git](https://github.com/gogonona384-crypto/PlayList-Manager.git)
-
-# Navigate to project directory
+git clone https://github.com/gogonona384-crypto/PlayList-Manager.git
 cd PlayList-Manager
-
-# Compile all source files
 g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
-
-# Run executable
 ./playlist_manager
 
-## 📸 Program Screenshots
-![App Execution](screenshot.png)
+---
+
+## 🎁 Bonus Features Implemented
+
+### 📜 Custom Playback History Stack (`HistoryStack`)
+Implemented a custom **LIFO (Last-In-First-Out) Stack** to record recently played tracks with zero standard library dependencies:
+* **Fixed Capacity:** Limits history to the last 10 played tracks to optimize memory.
+* **Null-Pointer Safety:** Prevents memory leaks and dangling pointers during `push()` and `pop()` operations.
+* **Instant Retrieval O(1):** Enables viewing played tracks in reverse chronological order instantly.
+
+---
 
 ## 📐 UML Class Diagram
 ![UML Diagram](uml-class-diagram.png.png)
+
+---
+
+## 📸 Program Screenshots
+![App Execution](screenshot.png)
