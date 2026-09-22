@@ -44,7 +44,7 @@ g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
 ---
 
 ## 📐 UML Class Diagram
-![UML Diagram](uml-class-diagram.png)
+![UML Diagram](uml-class-diagram.png.png)
 ---
 
 ## 📸 Program Screenshots
