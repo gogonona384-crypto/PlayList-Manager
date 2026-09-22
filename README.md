@@ -7,7 +7,7 @@ A C++ console-based music application that manages a library of songs and podcas
 ## 👥 Team Members & Contributions
 
 | Member Name | Role & Contributions |
-| :--- | :--- |
+| --- | --- |
 | **Nourhan Ahmed Kamal** | Architecture, Doubly Linked List, Queue, History Stack (Bonus), UML Diagram, & README |
 | **Team Member 2** | MediaItem Inheritance, Song & Podcast classes, Output Matching |
 | **Team Member 3** | Search & Sorting Algorithms (Binary Search, Selection Sort), Recursion |
