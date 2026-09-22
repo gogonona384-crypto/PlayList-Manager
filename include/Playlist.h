@@ -13,167 +13,23 @@ private:
     Node* tail;
     Node* currentTrack;
 
-    int calculateDurationRecursive(Node* node) 
-    {
-        if (node == nullptr) return 0;
-        return node->item->getDuration() + calculateDurationRecursive(node->next);
-    }
-
-    void printBackwardsRecursive(Node* node, int index) 
-    {
-        if (node == nullptr) return;
-        cout << index << ". " << node->item->getTitle() << endl;
-        printBackwardsRecursive(node->prev, index - 1); 
-    }
+    int calculateDurationRecursive(Node* node) const;
+    void printBackwardsRecursive(Node* node, int index) const;
 
 public:
-    Playlist() {
-        head = nullptr;
-        tail = nullptr;
-        currentTrack = nullptr;
-    }
+    Playlist();
+    ~Playlist();
 
-    void addTrack(MediaItem* item) {
-        Node* newNode = new Node(item);
-        if (head == nullptr) {
-            head = newNode;
-            tail = newNode;
-            currentTrack = newNode;
-        } else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
-        }
-        cout << "[OK] Added to playlist." << endl;
-    }
+    void addTrack(MediaItem* item);
+    void removeTrack(int index);
+    
+    MediaItem* playCurrent();
+    MediaItem* nextTrack();
+    MediaItem* prevTrack();
 
-    void removeTrack(int index) {
-        if (head == nullptr || index < 1) {
-            cout << "Invalid index or playlist is empty!" << endl;
-            return;
-        }
-
-        Node* temp = head;
-        int count = 1;
-
-        while (temp != nullptr && count < index) {
-            temp = temp->next;
-            count++;
-        }
-
-        if (temp == nullptr) {
-            cout << "Invalid index!" << endl;
-            return;
-        }
-
-        if (temp == currentTrack) {
-            currentTrack = (temp->next) ? temp->next : temp->prev;
-        }
-
-        if (temp == head) head = head->next;
-        if (temp == tail) tail = tail->prev;
-
-        if (temp->prev) temp->prev->next = temp->next;
-        if (temp->next) temp->next->prev = temp->prev;
-
-        delete temp;
-
-        if (head == nullptr) {
-            tail = nullptr;
-            currentTrack = nullptr;
-        }
-
-        cout << "[OK] Track removed successfully." << endl;
-    }
-
-    MediaItem* playCurrent() {
-        if (currentTrack) {
-            cout << "> NOW PLAYING: ";
-            currentTrack->item->play();
-            currentTrack->item->incrementPlayCount();
-            return currentTrack->item; 
-        } else {
-            cout << "Playlist is empty!" << endl;
-            return nullptr;
-        }
-    }
-
-    MediaItem* nextTrack() {
-        if (currentTrack && currentTrack->next) {
-            currentTrack = currentTrack->next;
-            return playCurrent();
-        } else {
-            cout << "[!] You are on the last track." << endl;
-            return nullptr;
-        }
-    }
-
-    MediaItem* prevTrack() {
-        if (currentTrack && currentTrack->prev) {
-            currentTrack = currentTrack->prev;
-            return playCurrent();
-        } else {
-            cout << "[!] You are on the first track." << endl;
-            return nullptr;
-        }
-    }
-
-    void printForwards() const {
-        if (head == nullptr) {
-            cout << "Playlist is empty!" << endl;
-            return;
-        }
-        Node* temp = head;
-        int index = 1;
-        while (temp != nullptr) {
-            cout << index++ << ". " << temp->item->getTitle() << endl;
-            temp = temp->next;
-        }
-    }
-
-    void printBackwards() const {
-        if (tail == nullptr) {
-            cout << "Playlist is empty!" << endl;
-            return;
-        }
-        
-        int totalTracks = 0;
-        Node* temp = head;
-        while (temp) { 
-            totalTracks++; 
-            temp = temp->next; 
-        }
-        
-        printBackwardsRecursive(tail, totalTracks); 
-    }
-
-    void showTotalDuration() const {
-        if (head == nullptr) {
-            cout << "Playlist is empty!" << endl;
-            return;
-        }
-
-        int totalSeconds = const_cast<Playlist*>(this)->calculateDurationRecursive(head);
-        int mins = totalSeconds / 60;
-        int secs = totalSeconds % 60;
-
-        int trackCount = 0;
-        Node* temp = head;
-        while (temp) { trackCount++; temp = temp->next; }
-
-        cout << "Total: " << setfill('0') << setw(2) << mins << ":" 
-             << setfill('0') << setw(2) << secs 
-             << " over " << trackCount << " tracks [recursive sum]" << endl;
-    }
-
-    ~Playlist() {
-        Node* current = head;
-        while (current != nullptr) {
-            Node* nextNode = current->next;
-            delete current; 
-            current = nextNode;
-        }
-    }
+    void printForwards() const;
+    void printBackwards() const;
+    void showTotalDuration() const;
 };
 
 #endif

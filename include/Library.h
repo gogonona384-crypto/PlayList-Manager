@@ -1,111 +1,39 @@
-#ifndef PLAYQUEUE_H     
-#define PLAYQUEUE_H 
+#ifndef LIBRARY_H
+#define LIBRARY_H
 
-#include <iostream>
-#include"Library.h"
-#include "Node.h"
+#include <string>
+#include "MediaItem.h"
 
-using namespace std;
-
-class PlayQueue
-{
+class Library {
 private:
-    Node* front;
-    Node* rear;
+    MediaItem** items;
+    int capacity;
+    int count;
+
+    MediaItem** history;
+    int historyCount;
+    int historyCapacity;
+
+    void resize();
+    void resizeHistory();
 
 public:
-    PlayQueue()
-    {
-        front = nullptr;
-        rear = nullptr;
-    }
+    Library(int initialCapacity = 10);
+    ~Library();
 
-    void enqueue(MediaItem* item)
-    {
-        Node* newNode = new Node(item);
-        if (front == nullptr)
-        {
-            front = newNode;
-            rear = newNode;
-        }
-        else
-        {
-            rear->next = newNode;
-            newNode->prev = rear; 
-            rear = newNode;
-        }
-        cout << "[OK] " << item->getTitle() << " added to the queue." << endl;
-    }
+    void addTrack(MediaItem* item);
+    void viewALL() const;
+    void deleteTrack(int index);
+    MediaItem* getTrack(int index) const;
+    int getCount() const;
 
-    MediaItem* playNext()
-    {
-        if (front == nullptr)
-        {
-            cout << "[X] Nothing in the queue." << endl;
-            return nullptr;
-        }
+    void binarySearchTitle(const std::string& title) const;
+    void filterLinear(const std::string& query) const;
+    void sortLibrary(int option);
+    void showStats() const;
 
-        Node* temp = front;
-        MediaItem* playedItem = temp->item;
-
-        cout << ">>> NOW PLAYING: ";
-        playedItem->play();
-
-        front = front->next;
-
-        if (front == nullptr)
-        {
-            rear = nullptr;
-            cout << "Queue is now empty." << endl;
-        }
-        else
-        {
-            front->prev = nullptr; 
-            int count = 0;
-            Node* curr = front;
-            while (curr != nullptr) {
-                count++;
-                curr = curr->next;
-            }
-            cout << count << (count == 1 ? " track left in the queue." : " tracks left in the queue.") << endl;
-        }
-
-        delete temp;
-        return playedItem; 
-    } 
-
-    void displayQueue() const
-    {
-        if (front == nullptr)
-        {
-            cout << "[X] Nothing in the queue." << endl;
-            return;
-        }
-
-        Node* current = front;
-        int index = 1;
-        while (current != nullptr)
-        {
-            cout << index++ << ". " << current->item->getTitle() << endl;
-            current = current->next;
-        }
-    }
-
-    bool isEmpty() const
-    {
-        return front == nullptr;
-    }
-
-    ~PlayQueue()
-    {
-        while (front != nullptr)
-        {
-            Node* temp = front;
-            front = front->next;
-            delete temp;
-        }
-        rear = nullptr;
-    }
+    void addToHistory(MediaItem* item);
+    void viewHistory() const;
 };
 
 #endif
