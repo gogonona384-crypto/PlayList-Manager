@@ -44,13 +44,12 @@ g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
 ---
 
 ## 📐 UML Class Diagram
-![UML Diagram](docs/uml-class-diagram.png)
+![UML Diagram](uml-class-diagram.png)
 
 ---
 
 ## 📸 Program Screenshots
-![App Execution](docs/screenshot.png)
-
+![App Execution](screenshot.png)
 ---
 
 ## 🎁 Bonus Features Included
