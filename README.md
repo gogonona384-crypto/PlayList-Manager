@@ -31,20 +31,9 @@ A C++ console-based music application that manages a library of songs and podcas
 
 Make sure you have a C++ compiler installed (`g++`). Run the following commands in your terminal:
 
-```bash
+\`\`\`bash
 # Compile all source files
 g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
 
 # Run executable
 ./playlist_manager
----
-
-## 📐 UML Class Diagram
-
-![UML Diagram](docs/uml-class-diagram.png)
-
----
-
-## 📷 App Screenshots
-
-*(Add 2 or 3 screenshots of your app running here)*
