@@ -20,7 +20,7 @@ Make sure you have a C++ compiler installed (`g++`). Run the following commands 
 
 ```bash
 # Clone the repository
-git clone [https://github.com/gogonona384-crypto/PlayList-Manager.git](https://github.com/gogonona384-crypto/PlayList-Manager.git)
+git clone https://github.com/gogonona384-crypto/PlayList-Manager.git
 
 # Navigate to project directory
 cd PlayList-Manager
@@ -30,7 +30,6 @@ g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
 
 # Run executable
 ./playlist_manager
----
 
 ## 📊 Big O Complexity Analysis
 
