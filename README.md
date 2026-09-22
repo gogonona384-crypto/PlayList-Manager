@@ -49,9 +49,7 @@ g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
 ---
 
 ## 📸 Program Screenshots
-![App Execution](docs/screenshot.png)
-
----
+![App Execution](screenshot.png)
 
 ## 🎁 Bonus Features Included
 * **Playback History Stack:** A custom LIFO stack tracking the last 10 played tracks (most recent first).
