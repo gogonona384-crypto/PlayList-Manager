@@ -1,4 +1,6 @@
-#include "../include/MediaItem.h"
+#include <iostream>
+#include <iomanip>
+#include "MediaItem.h"
 
 MediaItem::MediaItem(string t, int d) : title(t), duration(d), playCount(0) {}
 

@@ -20,6 +20,9 @@ public:
 
     virtual void play() = 0;
     virtual void getInfo() const = 0;
+    virtual void displayInfo() const {
+        cout << *this << endl;
+    }
 
     string getTitle() const;
     int getDuration() const;
