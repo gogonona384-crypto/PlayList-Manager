@@ -5,7 +5,7 @@ Podcast::Podcast(string t, string h, int d, int ep)
 
 void Podcast::play() {
     incrementPlayCount();
-    cout << "[PODCAST] Playing " << title << " (Ep. " << episodeNumber << "), hosted by " << host << endl;
+    cout << "[PODCAST] episode " << episodeNumber << ", hosted by " << host << endl;
 }
 
 void Podcast::getInfo() const {

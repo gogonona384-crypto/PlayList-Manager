@@ -1,4 +1,6 @@
 #include "../include/MediaItem.h"
+#include <iomanip>
+#include <sstream>
 
 MediaItem::MediaItem(string t, int d) : title(t), duration(d), playCount(0) {}
 
@@ -32,9 +34,6 @@ bool MediaItem::operator<(const MediaItem& other) const {
 }
 
 ostream& operator<<(ostream& os, const MediaItem& item) {
-    os << "Title: " << item.getTitle() 
-       << " | Duration: " << item.getFormattedDuration() 
-       << " | Plays: " << item.getPlayCount();
-    item.getInfo();
+    os << item.getTitle() << " (" << item.getFormattedDuration() << ")";
     return os;
 }

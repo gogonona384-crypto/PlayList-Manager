@@ -5,12 +5,13 @@ Song::Song(string t, string a, int d, string g)
 
 void Song::play() {
     incrementPlayCount();
-    cout << "[SONG] " << title << " by " << artist << " - streaming audio..." << endl;
+    cout << artist << " (" << getFormattedDuration() << ")" << endl;
+    cout << "[SONG] streaming audio..." << endl;
 }
 
 void Song::getInfo() const {
     cout << "[SONG] " << title << " | Artist: " << artist
-         << " | Duration: " << getFormattedDuration() << " | Genre: " << genre
+         << " | Genre: " << genre << " | Duration: " << getFormattedDuration()
          << " | Plays: " << playCount << endl;
 }
 
