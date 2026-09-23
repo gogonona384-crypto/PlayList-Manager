@@ -3,6 +3,8 @@
 PlayQueue::PlayQueue() : front(nullptr), rear(nullptr) {}
 
 void PlayQueue::enqueue(MediaItem* item) {
+    if (item == nullptr) return;
+
     Node* newNode = new Node(item);
     if (front == nullptr) {
         front = rear = newNode;
@@ -21,7 +23,9 @@ void PlayQueue::playNext() {
     }
 
     Node* temp = front;
-    cout << ">>> NOW PLAYING: ";
+    
+    temp->item->incrementPlayCount();
+    cout << ">>> NOW PLAYING: " << temp->item->getTitle() << endl;
     temp->item->play(); 
 
     front = front->next;
@@ -41,10 +45,11 @@ void PlayQueue::playNext() {
         cout << count << (count == 1 ? " track left in the queue." : " tracks left in the queue.") << endl;
     }
 
-    delete temp;
+    delete temp; 
 }
 
-void PlayQueue::displayQueue() const {
+void PlayQueue::displayQueue() const 
+{
     if (front == nullptr) {
         cout << "[X] Nothing in the queue." << endl;
         return;

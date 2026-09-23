@@ -13,7 +13,6 @@ void Playlist::printBackwardsRecursive(Node* node, int index) const {
     printBackwardsRecursive(node->prev, index - 1); 
 }
 
-// Add Track to Doubly Linked List
 void Playlist::addTrack(MediaItem* item) {
     Node* newNode = new Node(item);
     if (head == nullptr) {
@@ -66,8 +65,9 @@ void Playlist::removeTrack(int index) {
 }
 
 MediaItem* Playlist::playCurrent() {
-    if (currentTrack) {
-        cout << "> NOW PLAYING: ";
+    if (currentTrack && currentTrack->item) {
+        cout << ">>> NOW PLAYING: " << currentTrack->item->getTitle() << endl;
+        currentTrack->item->incrementPlayCount(); 
         currentTrack->item->play();
         return currentTrack->item; 
     } else {

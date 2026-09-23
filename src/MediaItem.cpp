@@ -1,23 +1,21 @@
-#include "MediaItem.h"
+#include "../include/MediaItem.h"
 
 MediaItem::MediaItem(string t, int d) : title(t), duration(d), playCount(0) {}
 
-MediaItem::~MediaItem() {}
-
-string MediaItem::getTitle() const {
-    return title;
+string MediaItem::getTitle() const { 
+    return title; 
 }
 
-int MediaItem::getDuration() const {
-    return duration;
+int MediaItem::getDuration() const { 
+    return duration; 
 }
 
-int MediaItem::getPlayCount() const {
-    return playCount;
+int MediaItem::getPlayCount() const { 
+    return playCount; 
 }
 
-void MediaItem::incrementPlayCount() {
-    playCount++;
+void MediaItem::incrementPlayCount() { 
+    playCount++; 
 }
 
 string MediaItem::getFormattedDuration() const {
@@ -34,8 +32,6 @@ bool MediaItem::operator<(const MediaItem& other) const {
 }
 
 ostream& operator<<(ostream& os, const MediaItem& item) {
-    os << "Title: " << item.title 
-       << " | Duration: " << item.getFormattedDuration() 
-       << " | Plays: " << item.playCount;
+    os << item.getTitle() << " (" << item.getFormattedDuration() << ") - Plays: " << item.getPlayCount();
     return os;
 }

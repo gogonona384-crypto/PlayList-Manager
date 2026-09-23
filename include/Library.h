@@ -3,6 +3,7 @@
 
 #include <string>
 #include "MediaItem.h"
+#include "HistoryStack.h" 
 
 class Library {
 private:
@@ -10,12 +11,9 @@ private:
     int capacity;
     int count;
 
-    MediaItem** history;
-    int historyCount;
-    int historyCapacity;
+    HistoryStack playHistory; 
 
     void resize();
-    void resizeHistory();
 
 public:
     Library(int initialCapacity = 10);
@@ -32,8 +30,8 @@ public:
     void sortLibrary(int option);
     void showStats() const;
 
-    void addToHistory(MediaItem* item);
-    void viewHistory() const;
+    void addToHistory(MediaItem* item) { playHistory.push(item); }
+    void viewHistory() const { playHistory.displayHistory(); }
 };
 
 #endif

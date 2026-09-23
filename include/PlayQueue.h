@@ -18,6 +18,8 @@ public:
     void enqueue(MediaItem* item);
     void playNext();
     void displayQueue() const;
+    
+    bool isEmpty() const { return front == nullptr; }
 };
 
 #endif

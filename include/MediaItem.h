@@ -15,39 +15,24 @@ protected:
     int playCount;
 
 public:
-    MediaItem(string t = "", int d = 0) : title(t), duration(d), playCount(0) {}
-    
+    MediaItem(string t = "", int d = 0);
     virtual ~MediaItem() = default; 
 
     virtual void play() = 0;
     virtual void getInfo() const = 0;
 
-    string getTitle() const { return title; }
-    int getDuration() const { return duration; }
-    int getPlayCount() const { return playCount; }
-    void incrementPlayCount() { playCount++; }
+    string getTitle() const;
+    int getDuration() const;
+    int getPlayCount() const;
+    void incrementPlayCount();
 
-    string getFormattedDuration() const {
-        int mins = duration / 60;
-        int secs = duration % 60;
-        ostringstream oss;
-        oss << setfill('0') << setw(2) << mins << ":" 
-            << setfill('0') << setw(2) << secs;
-        return oss.str();
-    }
+    virtual string getArtist() const { return ""; }
+    virtual string getGenre() const { return ""; }
 
-    bool operator<(const MediaItem& other) const {
-        return this->title < other.title;
-    }
+    string getFormattedDuration() const;
+    bool operator<(const MediaItem& other) const;
 
-    friend ostream& operator<<(ostream& os, const MediaItem& item)
-     {
-        os << "Title: " << item.title 
-           << " | Duration: " << item.getFormattedDuration() 
-           << " | Plays: " << item.playCount;
-           item.getInfo();
-        return os;
-    }
+    friend ostream& operator<<(ostream& os, const MediaItem& item);
 };
 
 #endif

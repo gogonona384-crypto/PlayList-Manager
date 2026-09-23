@@ -6,10 +6,6 @@ Library::Library(int initialCapacity) {
     capacity = initialCapacity;
     count = 0;
     items = new MediaItem*[capacity];
-
-    historyCapacity = 10;
-    historyCount = 0;
-    history = new MediaItem*[historyCapacity];
 }
 
 Library::~Library() {
@@ -17,7 +13,6 @@ Library::~Library() {
         delete items[i];
     }
     delete[] items;
-    delete[] history;
 }
 
 void Library::resize() {
@@ -43,7 +38,6 @@ void Library::viewALL() const {
         std::cout << "Library is empty.\n";
         return;
     }
-    std::cout << "ID\tTYPE\tTITLE\t\tPLAYS\n";
     for (int i = 0; i < count; i++) {
         std::cout << (i + 1) << "\t";
         items[i]->getInfo();
@@ -127,22 +121,13 @@ void Library::sortLibrary(int option) {
 }
 
 void Library::showStats() const {
-    double totalDuration = 0;
+    int totalSeconds = 0;
     for (int i = 0; i < count; i++) {
-        totalDuration += items[i]->getDuration();
+        totalSeconds += items[i]->getDuration();
     }
-    std::cout << "Library total: " << count << " items, Total Duration: " << totalDuration << "s\n";
-}
-
-void Library::addToHistory(MediaItem* item) {
-    if (historyCount < historyCapacity) {
-        history[historyCount++] = item;
-    }
-}
-
-void Library::viewHistory() const {
-    std::cout << "--- HISTORY ---\n";
-    for (int i = historyCount - 1; i >= 0; i--) {
-        std::cout << history[i]->getTitle() << "\n";
-    }
+    int minutes = totalSeconds / 60;
+    int seconds = totalSeconds % 60;
+    
+    std::cout << "Library total: " << count << " items, " 
+              << minutes << ":" << (seconds < 10 ? "0" : "") << seconds << "\n";
 }
