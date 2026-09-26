@@ -49,50 +49,62 @@ void showSearchSortMenu() {
 }
 
 int main() {
+    Library library;
     int mainChoice = -1;
 
     while (mainChoice != 0) {
         showMainMenu();
         if (!(cin >> mainChoice)) break;
 
-        switch (mainChoice) {
+        switch (mainChoice) 
+        {
             case 1: { 
                 int libChoice = -1;
                 showLibraryMenu();
                 cin >> libChoice;
                 if (libChoice == 1) {
-                    string title, artist, genre, duration;
+                    string title, artist, genre;
+                    int duration;
                     cout << "Title   : "; cin >> title;
                     cout << "Artist  : "; cin >> artist;
                     cout << "Duration: "; cin >> duration;
                     cout << "Genre   : "; cin >> genre;
                     cout << "[OK] Added. Library updated.\n";
-                } else if (libChoice == 3) {
-                    cout << "\nID   TYPE     TITLE        BY           LENGTH   PLAYS\n";
-                    cout << "01   SONG     Bahebak      Amr Diab     03:45    4\n";
-                    cout << "02   SONG     Enta Eih     Nancy Ajram  04:10    1\n";
-                    cout << "03   PODCAST  Ep.12        Ahmed Samir  28:00    2\n";
+
+                    library.addTrack(new Song(title, artist, duration, genre));
+                    cout << "[OK] Added. Library updated.\n";
+                } 
+                else if (libChoice == 2)
+                 {
+                string title, host;
+                int episode , duration;
+        cout << "Title   : "; cin >> title;
+        cout << "Host    : "; cin >> host;
+        cout << "Duration: "; cin >> duration;
+        cout << "Episode : "; cin >> episode;
+        library.addTrack(new Podcast(title, host, duration, episode));
+        cout << "[OK] Added. Library updated.\n";
+    }
+                else if (libChoice == 3) 
+                {
+                    library.viewALL();
+                }
+                else if (libChoice == 4) 
+                {
+                    int index;
+                    cout << "Enter index to delete: "; cin >> index;
+                    library.deleteTrack(index);
                 }
                 break;
             }
             case 2: { 
-                cout << "\n>>> NOW PLAYING: Bahebak - Amr Diab (03:45)\n";
-                cout << "[SONG] streaming audio...\n";
-                cout << "(n) next  (p) previous  (q) quit\n> ";
-                char nav;
-                cin >> nav;
-                if (nav == 'n') {
-                    cout << ">>> NOW PLAYING: Enta Eih - Nancy Ajram (04:10)\n";
-                }
+               cout << "\n>>> Playlist features will run here...\n";
                 break;
             }
             case 3: { 
                 int qChoice = -1;
                 showQueueMenu();
                 cin >> qChoice;
-                if (qChoice == 3) {
-                    cout << ">>> NOW PLAYING: Enta Eih - Nancy Ajram\n";
-                }
                 break;
             }
             case 4: { 
@@ -102,16 +114,21 @@ int main() {
                 if (ssChoice == 1) {
                     string query;
                     cout << "Title: "; cin >> query;
-                    cout << "Found in 2 comparisons [binary search]\n";
+                    library.binarySearchTitle(query);
+                } else if (ssChoice == 2) {
+                    string query;
+                    cout << "Genre/Artist: "; cin >> query;
+                    library.filterLinear(query);
+                } else if (ssChoice == 3) {
+                    int sortOpt;
+                    cout << "Sort by (1) title (2) duration (3) play count: ";
+                    cin >> sortOpt;
+                    library.sortLibrary(sortOpt);
                 }
                 break;
             }
             case 5: { 
-                cout << "\nTOP 5 MOST PLAYED\n";
-                cout << "1. Bahebak      - 4 plays\n";
-                cout << "2. Ep.12 Careers- 2 plays\n";
-                cout << "3. Enta Eih     - 1 play\n";
-                cout << "Library total: 3 items, 35:55\n";
+                library.showStats();
                 break;
             }
             case 0:
