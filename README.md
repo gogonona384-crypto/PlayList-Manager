@@ -37,7 +37,7 @@ g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
 ./playlist_manager
 
 ## 📸 Program Screenshots
-![App Execution](screenshot.jpeg)
+![App Execution](screenshot.jpeg.jpeg)
 
 ## 📐 UML Class Diagram
-![UML Diagram](uml-class-diagram.png.png)
+![UML Diagram](uml-class-diagram.png)
