@@ -92,7 +92,9 @@ void Library::binarySearchTitle(const std::string& title) const {
 void Library::filterLinear(const std::string& query) const {
     int matches = 0;
     for (int i = 0; i < count; i++) {
-        if (items[i]->getTitle().find(query) != std::string::npos) {
+        if (items[i]->getArtist().find(query) != std::string::npos ||
+            items[i]->getGenre().find(query) != std::string::npos)
+        {
             items[i]->getInfo();
             matches++;
         }
@@ -121,13 +123,65 @@ void Library::sortLibrary(int option) {
 }
 
 void Library::showStats() const {
+    if (count == 0) {
+        std::cout << "Library is empty.\n";
+        return;
+    }
+
+    std::cout << "\nTOP 5 MOST PLAYED\n";
+
+    int limit = (count < 5) ? count : 5;
+
+    bool* used = new bool[count];
+
+    for (int i = 0; i < count; i++) {
+        used[i] = false;
+    }
+
+    for (int rank = 1; rank <= limit; rank++) {
+
+        int bestIndex = -1;
+
+        for (int i = 0; i < count; i++) {
+
+            if (used[i]) {
+                continue;
+            }
+
+            if (bestIndex == -1 ||
+                items[i]->getPlayCount() >
+                items[bestIndex]->getPlayCount()) {
+
+                bestIndex = i;
+            }
+        }
+
+        used[bestIndex] = true;
+
+        std::cout << rank << ". "
+                  << items[bestIndex]->getTitle()
+                  << " "
+                  << items[bestIndex]->getPlayCount()
+                  << " plays\n";
+    }
+
+    delete[] used;
+
     int totalSeconds = 0;
+
     for (int i = 0; i < count; i++) {
         totalSeconds += items[i]->getDuration();
     }
+
     int minutes = totalSeconds / 60;
     int seconds = totalSeconds % 60;
-    
-    std::cout << "Library total: " << count << " items, " 
-              << minutes << ":" << (seconds < 10 ? "0" : "") << seconds << "\n";
+
+    std::cout << "Library total: "
+              << count
+              << " items, "
+              << minutes
+              << ":"
+              << (seconds < 10 ? "0" : "")
+              << seconds
+              << "\n";
 }

@@ -50,6 +50,8 @@ void showSearchSortMenu() {
 
 int main() {
     Library library;
+    PlayQueue playQueue;
+    Playlist playlist;
     int mainChoice = -1;
 
     while (mainChoice != 0) {
@@ -69,9 +71,7 @@ int main() {
                     cout << "Artist  : "; cin >> artist;
                     cout << "Duration: "; cin >> duration;
                     cout << "Genre   : "; cin >> genre;
-                    cout << "[OK] Added. Library updated.\n";
-
-                    library.addTrack(new Song(title, artist, duration, genre));
+                   library.addTrack(new Song(title, artist, duration, genre));
                     cout << "[OK] Added. Library updated.\n";
                 } 
                 else if (libChoice == 2)
@@ -83,8 +83,7 @@ int main() {
         cout << "Duration: "; cin >> duration;
         cout << "Episode : "; cin >> episode;
         library.addTrack(new Podcast(title, host, duration, episode));
-        cout << "[OK] Added. Library updated.\n";
-    }
+                }
                 else if (libChoice == 3) 
                 {
                     library.viewALL();
@@ -97,16 +96,134 @@ int main() {
                 }
                 break;
             }
-            case 2: { 
-               cout << "\n>>> Playlist features will run here...\n";
-                break;
+            case 2:
+         { 
+             int pChoice = -1;
+
+          while (pChoice != 0) {
+           cout << "\n------------- PLAYLIST -----------------\n";
+            cout << "1. Add track\n";
+            cout << "2. Remove track\n";
+            cout << "3. Play current track\n";
+            cout << "4. Next track\n";
+            cout << "5. Previous track\n";
+            cout << "6. Print forwards\n";
+            cout << "7. Print backwards\n";
+            cout << "8. Total duration\n";
+            cout << "0. Back\n";
+            cout << "-----------------------------------------\n";
+            cout << "Choose: ";
+            cin >> pChoice;
+
+        if (pChoice == 1) {
+            int trackNumber;
+            cout << "Track ID: ";
+            cin >> trackNumber;
+
+            MediaItem* item = library.getTrack(trackNumber - 1);
+
+            if (item == nullptr) {
+                cout << "[X] Invalid track ID!\n";
+            } else {
+                playlist.addTrack(item);
             }
-            case 3: { 
-                int qChoice = -1;
-                showQueueMenu();
-                cin >> qChoice;
-                break;
+        }
+
+        else if (pChoice == 2) {
+            int index;
+            cout << "Track index to remove: ";
+            cin >> index;
+            playlist.removeTrack(index);
+        }
+
+        else if (pChoice == 3) {
+    playlist.playCurrent();
+
+    char command;
+    cout << "(n) next (p) previous (q) quit\n";
+    cin >> command;
+
+    while (command != 'q') {
+
+        if (command == 'n') {
+            playlist.nextTrack();
+        }
+        else if (command == 'p') {
+            playlist.prevTrack();
+        }
+        else {
+            cout << "[X] Invalid command.\n";
+        }
+
+        if (command != 'q') {
+            cin >> command;
+        }
+    }
+}
+
+        else if (pChoice == 4) {
+            playlist.nextTrack();
+        }
+
+        else if (pChoice == 5) {
+            playlist.prevTrack();
+        }
+
+        else if (pChoice == 6) {
+            playlist.printForwards();
+        }
+
+        else if (pChoice == 7) {
+            playlist.printBackwards();
+        }
+
+        else if (pChoice == 8) {
+            playlist.showTotalDuration();
+        }
+
+        else if (pChoice != 0) {
+            cout << "[X] Invalid choice!\n";
+        }
+    }
+
+    break;
+}
+            case 3: {
+    int qChoice = -1;
+
+    while (qChoice != 0) {
+        showQueueMenu();
+        cin >> qChoice;
+
+        if (qChoice == 1) {
+            int trackNumber;
+            cout << "Track ID: ";
+            cin >> trackNumber;
+
+            MediaItem* item = library.getTrack(trackNumber - 1);
+
+            if (item == nullptr) {
+                cout << "[X] Invalid track ID!\n";
+            } else {
+                playQueue.enqueue(item);
             }
+        }
+
+        else if (qChoice == 2) {
+            playQueue.displayQueue();
+        }
+
+        else if (qChoice == 3) {
+            playQueue.playNext();
+        }
+
+        else if (qChoice != 0) {
+            cout << "[X] Invalid choice!\n";
+        }
+    }
+
+    break;
+}
             case 4: { 
                 int ssChoice = -1;
                 showSearchSortMenu();

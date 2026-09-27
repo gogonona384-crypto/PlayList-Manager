@@ -24,7 +24,6 @@ void PlayQueue::playNext() {
 
     Node* temp = front;
     
-    temp->item->incrementPlayCount();
     cout << ">>> NOW PLAYING: " << temp->item->getTitle() << endl;
     temp->item->play(); 
 

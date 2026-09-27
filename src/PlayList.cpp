@@ -67,7 +67,6 @@ void Playlist::removeTrack(int index) {
 MediaItem* Playlist::playCurrent() {
     if (currentTrack && currentTrack->item) {
         cout << ">>> NOW PLAYING: " << currentTrack->item->getTitle() << endl;
-        currentTrack->item->incrementPlayCount(); 
         currentTrack->item->play();
         return currentTrack->item; 
     } else {
