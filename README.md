@@ -4,11 +4,14 @@ A C++ console-based music application that manages a library of songs and podcas
 
 ---
 
-## 👥 Team Members & Contributions
+## 👤 Developer & Contributions
 
-| Member Name | Role & Contributions |
+| Developer Name | Role & Contributions |
 | :--- | :--- |
-| **Nourhan Ahmed Kamal** | Architecture, Doubly Linked List, Queue, History Stack (Bonus), UML Diagram, & README | MediaItem Inheritance, Song & Podcast classes, Output Matching | Search & Sorting Algorithms (Binary Search, Selection Sort), Recursion |
+| **Nourhan Ahmed Kamal** | **Sole Developer:** Complete System Architecture, Data Structures (Doubly Linked List, Custom Queue, History Stack), OOP Hierarchy (MediaItem, Song, Podcast), Search & Sorting Algorithms, Recursion, UML Design, & README Documentation. |
+
+---
+
 ## 📊 Algorithms & Data Structures Complexity (Big O)
 
 | Operation / Algorithm | Data Structure / Implementation | Time Complexity (Best) | Time Complexity (Average/Worst) | Space Complexity |
@@ -37,7 +40,7 @@ g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
 ./playlist_manager
 
 ## 📸 Program Screenshots
-![App Execution](screenshot.jpeg)
+![App Execution](docs/screenshot.jpeg)
 
 ## 📐 UML Class Diagram
-![UML Diagram](uml-class-diagram.png.png)
+![UML Diagram](docs/uml-class-diagram.png)
