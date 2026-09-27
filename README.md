@@ -38,6 +38,7 @@ g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
 
 # Run executable
 ./playlist_manager
+```
 
 ## 📸 Program Screenshots
 
@@ -46,4 +47,3 @@ g++ -std=c++11 src/*.cpp -Iinclude -o playlist_manager
 ## 📐 UML Class Diagram
 
 ![UML Diagram](uml-class-diagram.png)
-
