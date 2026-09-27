@@ -1,10 +1,7 @@
 #ifndef PLAYQUEUE_H
 #define PLAYQUEUE_H
 
-#include <iostream>
 #include "Node.h"
-
-using namespace std;
 
 class PlayQueue {
 private:
@@ -15,11 +12,18 @@ public:
     PlayQueue();
     ~PlayQueue();
 
+    PlayQueue(const PlayQueue&) = delete;
+    PlayQueue& operator=(const PlayQueue&) = delete;
+
     void enqueue(MediaItem* item);
-    void playNext();
+    MediaItem* playNext();
+
     void displayQueue() const;
-    
-    bool isEmpty() const { return front == nullptr; }
+
+    void removeItem(MediaItem* item);
+    bool contains(MediaItem* item) const;
+
+    bool isEmpty() const;
 };
 
 #endif

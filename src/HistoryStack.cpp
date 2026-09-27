@@ -1,9 +1,21 @@
 #include "HistoryStack.h"
 
-HistoryStack::HistoryStack() : topIndex(-1) {
-    for (int i = 0; i < CAPACITY; i++) {
-        items[i] = nullptr;
+#include <iostream>
+
+HistoryStack::HistoryStack()
+    : top(nullptr), count(0) {
+}
+
+void HistoryStack::clear() {
+    while (top != nullptr) {
+        HistoryNode* temp = top;
+
+        top = top->next;
+
+        delete temp;
     }
+
+    count = 0;
 }
 
 HistoryStack::~HistoryStack() {
@@ -11,49 +23,92 @@ HistoryStack::~HistoryStack() {
 }
 
 void HistoryStack::push(MediaItem* item) {
-    if (item == nullptr) return;
+    if (item == nullptr) {
+        return;
+    }
 
-    if (topIndex < CAPACITY - 1) {
-        items[++topIndex] = item;
-    } else {
-        for (int i = 0; i < CAPACITY - 1; i++) {
-            items[i] = items[i + 1];
+    // Keep the most recent occurrence only.
+    removeItem(item);
+
+    top = new HistoryNode(item, top);
+
+    count++;
+
+    if (count > MAX_HISTORY) {
+
+        HistoryNode* current = top;
+
+        while (current->next != nullptr &&
+               current->next->next != nullptr) {
+
+            current = current->next;
         }
-        items[CAPACITY - 1] = item;
+
+        if (current->next != nullptr) {
+            delete current->next;
+
+            current->next = nullptr;
+
+            count--;
+        }
     }
 }
 
-MediaItem* HistoryStack::pop() {
-    if (topIndex < 0) return nullptr;
-    MediaItem* item = items[topIndex];
-    items[topIndex] = nullptr;
-    topIndex--;
-    return item;
-}
-
-MediaItem* HistoryStack::top() const {
-    return (topIndex >= 0) ? items[topIndex] : nullptr;
-}
-
-bool HistoryStack::empty() const { return topIndex == -1; }
-bool HistoryStack::full() const  { return topIndex == CAPACITY - 1; }
-int  HistoryStack::size() const  { return topIndex + 1; }
-
-void HistoryStack::clear() {
-    for (int i = 0; i <= topIndex; i++) {
-        items[i] = nullptr;
+void HistoryStack::removeItem(MediaItem* item) {
+    if (item == nullptr) {
+        return;
     }
-    topIndex = -1;
+
+    HistoryNode* current = top;
+    HistoryNode* previous = nullptr;
+
+    while (current != nullptr) {
+
+        if (current->item == item) {
+
+            HistoryNode* toDelete = current;
+
+            current = current->next;
+
+            if (previous == nullptr) {
+                top = current;
+            }
+            else {
+                previous->next = current;
+            }
+
+            delete toDelete;
+
+            count--;
+        }
+        else {
+            previous = current;
+            current = current->next;
+        }
+    }
 }
 
 void HistoryStack::displayHistory() const {
-    if (empty()) {
-        std::cout << "No play history yet.\n";
+    cout << "\n---------- PLAY HISTORY (last 10) ----------\n";
+
+    if (top == nullptr) {
+        cout << "History is empty." << endl;
         return;
     }
-    std::cout << "--- PLAY HISTORY (most recent first) ---\n";
-    int display = 1;
-    for (int i = topIndex; i >= 0; i--) {
-        std::cout << display++ << ". " << items[i]->getTitle() << "\n";
+
+    const HistoryNode* current = top;
+
+    int index = 1;
+
+    while (current != nullptr) {
+
+        cout << index++
+             << ". "
+             << current->item->getTitle()
+             << " - "
+             << current->item->getCreator()
+             << endl;
+
+        current = current->next;
     }
 }

@@ -2,8 +2,9 @@
 #define LIBRARY_H
 
 #include <string>
+
+#include "HistoryStack.h"
 #include "MediaItem.h"
-#include "HistoryStack.h" 
 
 class Library {
 private:
@@ -11,27 +12,42 @@ private:
     int capacity;
     int count;
 
-    HistoryStack playHistory; 
+    HistoryStack playHistory;
 
     void resize();
 
+    void sortByTitleInternal() const;
+    bool isTitleSorted() const;
+
+    void printTableHeader() const;
+    void printRow(int index) const;
+
 public:
-    Library(int initialCapacity = 10);
+    explicit Library(int initialCapacity = 10);
     ~Library();
 
+    Library(const Library&) = delete;
+    Library& operator=(const Library&) = delete;
+
     void addTrack(MediaItem* item);
+
     void viewALL() const;
     void deleteTrack(int index);
+
     MediaItem* getTrack(int index) const;
+
     int getCount() const;
 
-    void binarySearchTitle(const std::string& title) const;
+    void binarySearchTitle(const std::string& title);
     void filterLinear(const std::string& query) const;
+
     void sortLibrary(int option);
+
     void showStats() const;
 
-    void addToHistory(MediaItem* item) { playHistory.push(item); }
-    void viewHistory() const { playHistory.displayHistory(); }
+    void addToHistory(MediaItem* item);
+    void removeFromHistory(MediaItem* item);
+    void viewHistory() const;
 };
 
 #endif

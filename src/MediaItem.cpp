@@ -1,39 +1,64 @@
-#include <iostream>
-#include <iomanip>
 #include "MediaItem.h"
 
-MediaItem::MediaItem(string t, int d) : title(t), duration(d), playCount(0) {}
+#include <iomanip>
+#include <sstream>
 
-string MediaItem::getTitle() const { 
-    return title; 
+MediaItem::MediaItem(string t, int d)
+    : title(t), duration(d < 0 ? 0 : d), playCount(0) {
 }
 
-int MediaItem::getDuration() const { 
-    return duration; 
+string MediaItem::getTitle() const {
+    return title;
 }
 
-int MediaItem::getPlayCount() const { 
-    return playCount; 
+int MediaItem::getDuration() const {
+    return duration;
 }
 
-void MediaItem::incrementPlayCount() { 
-    playCount++; 
+int MediaItem::getPlayCount() const {
+    return playCount;
+}
+
+void MediaItem::incrementPlayCount() {
+    playCount++;
 }
 
 string MediaItem::getFormattedDuration() const {
-    int mins = duration / 60;
-    int secs = duration % 60;
-    ostringstream oss;
-    oss << setfill('0') << setw(2) << mins << ":" 
-        << setfill('0') << setw(2) << secs;
-    return oss.str();
+    int minutes = duration / 60;
+    int seconds = duration % 60;
+
+    ostringstream out;
+
+    out << setfill('0')
+        << setw(2) << minutes
+        << ":"
+        << setw(2) << seconds;
+
+    return out.str();
 }
 
 bool MediaItem::operator<(const MediaItem& other) const {
-    return this->title < other.title;
+    return title < other.title;
+}
+
+string MediaItem::getArtist() const {
+    return "";
+}
+
+string MediaItem::getGenre() const {
+    return "";
+}
+
+void MediaItem::displayInfo() const {
+    cout << *this << endl;
 }
 
 ostream& operator<<(ostream& os, const MediaItem& item) {
-    os << item.getTitle() << " (" << item.getFormattedDuration() << ") - Plays: " << item.getPlayCount();
+    os << item.title
+       << " | "
+       << item.getFormattedDuration()
+       << " | Plays: "
+       << item.playCount;
+
     return os;
 }

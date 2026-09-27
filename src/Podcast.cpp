@@ -1,23 +1,47 @@
 #include "Podcast.h"
 
+#include <iostream>
+
 Podcast::Podcast(string t, string h, int d, int ep)
-    : MediaItem(t, d), host(h), episodeNumber(ep) {}
+    : MediaItem(t, d), host(h), episodeNumber(ep) {
+}
 
 void Podcast::play() {
     incrementPlayCount();
-    cout << "[PODCAST] episode " << episodeNumber << ", hosted by " << host << endl;
+
+    cout << "[PODCAST] episode "
+         << episodeNumber
+         << ", hosted by "
+         << host
+         << endl;
 }
 
 void Podcast::getInfo() const {
-    cout << "[PODCAST] " << title << " | Host: " << host
-         << " | Ep: " << episodeNumber << " | Duration: " << getFormattedDuration()
-         << " | Plays: " << playCount << endl;
+    cout << "[PODCAST] "
+         << title
+         << " | Host: "
+         << host
+         << " | Ep: "
+         << episodeNumber
+         << " | Duration: "
+         << getFormattedDuration()
+         << " | Plays: "
+         << playCount
+         << endl;
 }
 
-string Podcast::getHost() const { 
-    return host; 
+string Podcast::getType() const {
+    return "PODCAST";
 }
 
-int Podcast::getEpisodeNumber() const { 
-    return episodeNumber; 
+string Podcast::getCreator() const {
+    return host;
+}
+
+string Podcast::getHost() const {
+    return host;
+}
+
+int Podcast::getEpisodeNumber() const {
+    return episodeNumber;
 }

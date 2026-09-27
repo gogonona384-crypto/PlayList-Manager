@@ -14,8 +14,11 @@ public:
     void play() override;
     void getInfo() const override;
 
-    string getArtist() const;
-    string getGenre() const;
+    string getType() const override;
+    string getCreator() const override;
+
+    string getArtist() const override;
+    string getGenre() const override;
 };
 
 #endif

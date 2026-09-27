@@ -14,6 +14,9 @@ public:
     void play() override;
     void getInfo() const override;
 
+    string getType() const override;
+    string getCreator() const override;
+
     string getHost() const;
     int getEpisodeNumber() const;
 };

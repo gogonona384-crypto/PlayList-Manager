@@ -1,11 +1,7 @@
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 
-#include <iostream>
-#include <iomanip>
 #include "Node.h"
-
-using namespace std;
 
 class Playlist {
 private:
@@ -20,15 +16,22 @@ public:
     Playlist();
     ~Playlist();
 
+    Playlist(const Playlist&) = delete;
+    Playlist& operator=(const Playlist&) = delete;
+
     void addTrack(MediaItem* item);
     void removeTrack(int index);
-    
+
+    void removeItem(MediaItem* item);
+    bool contains(MediaItem* item) const;
+
     MediaItem* playCurrent();
     MediaItem* nextTrack();
     MediaItem* prevTrack();
 
     void printForwards() const;
     void printBackwards() const;
+
     void showTotalDuration() const;
 };
 

@@ -3,15 +3,22 @@
 
 #include "MediaItem.h"
 
-struct Node {
+class Node {
+private:
     MediaItem* item;
     Node* next;
     Node* prev;
 
-    Node(MediaItem* mediaItem) 
-        : item(mediaItem), next(nullptr), prev(nullptr) {}
+public:
+    explicit Node(MediaItem* mediaItem = nullptr);
 
-    ~Node() {} 
+    MediaItem* getItem() const;
+
+    Node* getNext() const;
+    Node* getPrev() const;
+
+    void setNext(Node* node);
+    void setPrev(Node* node);
 };
 
 #endif
