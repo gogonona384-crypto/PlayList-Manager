@@ -85,7 +85,6 @@ string readText(const string& prompt)
         string input;
         getline(cin, input);
 
-        // هنا السحر: تجنب الأسطر الفارغة المتبقية من اختيار المنيو (cin buffer)
         if (input.empty())
             continue;
 
@@ -97,7 +96,6 @@ int readDuration()
 {
     while (true)
     {
-        // استدعاء readText لضمان قراءة سطر صحيح وتجاهل الـ Empty Buffer
         string input = readText("Duration: ");
 
         size_t colon = input.find(':');
